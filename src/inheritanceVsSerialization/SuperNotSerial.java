@@ -1,16 +1,19 @@
 package inheritanceVsSerialization;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class SuperNotSerial {
 
 	public static void main(String[] args) {
 
-		Dog d = new Dog(35, "Fido");
-		System.out.println("before: " + d.name + " " + d.weight);
+		inheritanceVsSerialization.Dog d = new inheritanceVsSerialization.Dog(35, "Fido");
+		System.out.println("before: d.name => " + d.name + "  and d.weight => " + d.weight);
 
 		try {
-			FileOutputStream fs = new FileOutputStream("testSer.ser");
+			FileOutputStream fs = new FileOutputStream("testSer1.ser");
 			ObjectOutputStream os = new ObjectOutputStream(fs);
 			os.writeObject(d);
 			os.close();
@@ -19,10 +22,9 @@ public class SuperNotSerial {
 		}
 
 		try {
-
-			FileInputStream fis = new FileInputStream("testSer.ser");
+			FileInputStream fis = new FileInputStream("testSer1.ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			d = (Dog) ois.readObject();
+			d = (inheritanceVsSerialization.Dog) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,7 +33,7 @@ public class SuperNotSerial {
 		// The key here is that because Animal is not serializable, when the Dog
 		// was deserialized, the Animal constructor ran and reset the Dog's
 		// inherited weight variable.
-		System.out.println("after:  " + d.name + " " + d.weight);
+		System.out.println("After: d.name => " + d.name + "  and d.weight => " + d.weight);
 
 		// Because Animal is NOT serializable, any state maintained in the
 		// Animal class, even though the state variable is inherited by the Dog,

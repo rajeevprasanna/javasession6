@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
 public class SerializeDog {
+	
 	public static void main(String[] args) {
 		Collar c = new Collar(3);
 		Dog d = new Dog(c, 8);
